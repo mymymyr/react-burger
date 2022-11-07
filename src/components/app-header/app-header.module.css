@@ -1,0 +1,23 @@
+.header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    color: 'white';
+}
+
+.element {
+    min-width: 'max-content';
+}
+
+.flex {
+    display: flex;
+}
+
+.position__center {
+    justify-self: center;
+}
+
+.position__end {
+    justify-self: end;
+}
