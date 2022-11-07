@@ -8,6 +8,7 @@
 
 .element {
     min-width: 'max-content';
+    cursor: pointer;
 }
 
 .flex {

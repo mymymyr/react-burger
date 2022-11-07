@@ -6,7 +6,7 @@ function AppHeader() {
     return (
         <header className={headerStyles.header}>
             <div className={headerStyles.flex}>
-                <div className={`${headerStyles.flex} p-5 mt-4 mb-4 mr-2`}>
+                <div className={`${headerStyles.flex} ${headerStyles.element} p-5 mt-4 mb-4 mr-2`}>
                     <BurgerIcon type='primary' />
                     <p className='text text_type_main-default pl-2'>
                         Конструктор

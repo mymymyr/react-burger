@@ -9,6 +9,10 @@
     justify-content: center;
 }
 
+.list > li {
+    cursor: pointer;
+}
+
 .flex {
     display: flex;
 }
