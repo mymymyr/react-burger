@@ -1,58 +1,46 @@
 import React from 'react';
 import BurgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import Card from '../card/card.jsx';
 import PropTypes from 'prop-types';
+import { burgerPropTypes } from '../utils/dataPropTypes.js';
+import BurgerIngredientCategory from '../burger-ingredient-category/burger-ingredient-category.jsx';
 
 function BurgerIngredients(props) {
-    const [current, setCurrent] = React.useState('one');
+    const Tabs = {
+        bun: 'bun',
+        sauce: 'sauce',
+        main: 'main'
+    }
+    const [current, setCurrent] = React.useState(Tabs.bun);
     return (
         <section>
             <p className='text text_type_main-large pt-10 pb-5'>
                 Cоберите бургер
             </p>
             <div className={`${BurgerIngredientsStyles.flex} mb-10`}>
-                <Tab value='one' active={current === 'one'} onClick={setCurrent}>
+                <Tab value={Tabs.bun} active={current === Tabs.bun} onClick={setCurrent}>
                     Булки
                 </Tab>
-                <Tab value='two' active={current === 'two'} onClick={setCurrent}>
+                <Tab value={Tabs.sauce} active={current === Tabs.sauce} onClick={setCurrent}>
                     Соусы
                 </Tab>
-                <Tab value='three' active={current === 'three'} onClick={setCurrent}>
+                <Tab value={Tabs.main} active={current === Tabs.main} onClick={setCurrent}>
                     Начинки
                 </Tab>
             </div>
             <div className={BurgerIngredientsStyles.scroll}>
-                <p className='text text_type_main-medium mb-6'>
-                    Булки
-                </p>
-                <ul className={BurgerIngredientsStyles.list}>
-                    <Card data={props.cards.bunArr} />
-                </ul>
-                <p className='text text_type_main-medium mt-10 mb-6'>
-                    Соусы
-                </p>
-                <ul className={BurgerIngredientsStyles.list}>
-                    <Card data={props.cards.sauceArr} />
-                </ul>
-                <p className='text text_type_main-medium mt-10 mb-6'>
-                    Начинки
-                </p>
-                <ul className={BurgerIngredientsStyles.list}>
-                    <Card data={props.cards.mainArr} />
-                </ul>
+                <BurgerIngredientCategory name="Булки" data={props.bunArr} />
+                <BurgerIngredientCategory name="Соусы" data={props.sauceArr} />
+                <BurgerIngredientCategory name="Начинки" data={props.mainArr} />
             </div>
         </section >
     );
 }
 
 BurgerIngredients.propTypes = {
-    cards: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired
-    }))).isRequired
+    bunArr: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    mainArr: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    sauceArr: PropTypes.arrayOf(burgerPropTypes).isRequired
 };
 
 export default BurgerIngredients;

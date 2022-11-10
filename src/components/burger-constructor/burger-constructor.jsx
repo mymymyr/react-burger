@@ -2,23 +2,27 @@ import React from 'react';
 import BurgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { burgerPropTypes } from '../utils/dataPropTypes.js';
 
 function BurgerConstructor(props) {
+    const sum = props.bunArr[0].price * 2 +
+        props.mainArr.reduce((prev, cur) => prev + cur.price, 0) +
+        props.sauceArr.reduce((prev, cur) => prev + cur.price, 0);
     return (
         <section className={`${BurgerConstructorStyles.section} mt-25 mr-4`}>
             <ul className={BurgerConstructorStyles.list}>
-                <li key='firstIngredient' className='ml-8 mb-4'>
+                <li className='ml-8 mb-4'>
                     <ConstructorElement
                         type='top'
                         isLocked={true}
-                        text={props.cards.bunArr[0].name + ' (верх)'}
-                        price={props.cards.bunArr[0].price}
-                        thumbnail={props.cards.bunArr[0].image}
+                        text={props.bunArr[0].name + ' (верх)'}
+                        price={props.bunArr[0].price}
+                        thumbnail={props.bunArr[0].image}
                     />
                 </li>
                 <ul className={`${BurgerConstructorStyles.list} ${BurgerConstructorStyles.scroll}`}>
-                    {props.cards.mainArr.map((item, index) => (
-                        <li key={`${item.id} + '__' + ${index}`} className={`${BurgerConstructorStyles.element} mb-4`}>
+                    {props.mainArr.map((item, index) => (
+                        <li key={`${item._id}__${index}`} className={`${BurgerConstructorStyles.element} mb-4`}>
                             <div className={BurgerConstructorStyles.dragIcon}>
                                 <DragIcon type='primary' />
                             </div>
@@ -29,8 +33,8 @@ function BurgerConstructor(props) {
                             />
                         </li>
                     ))}
-                    {props.cards.sauceArr.map((item, index) => (
-                        <li key={`${item.id} + '__' + ${index}`} className={`${BurgerConstructorStyles.element} mb-4`}>
+                    {props.sauceArr.map((item, index) => (
+                        <li key={`${item._id}__${index}`} className={`${BurgerConstructorStyles.element} mb-4`}>
                             <div className={BurgerConstructorStyles.dragIcon}>
                                 <DragIcon type='primary' />
                             </div>
@@ -42,21 +46,19 @@ function BurgerConstructor(props) {
                         </li>
                     ))}
                 </ul>
-                <li key='lastIngredient' className='ml-8 mb-10 mt-4'>
+                <li className='ml-8 mb-10 mt-4'>
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={props.cards.bunArr[0].name + ' (низ)'}
-                        price={props.cards.bunArr[0].price}
-                        thumbnail={props.cards.bunArr[0].image}
+                        text={props.bunArr[0].name + ' (низ)'}
+                        price={props.bunArr[0].price}
+                        thumbnail={props.bunArr[0].image}
                     />
                 </li>
             </ul>
             <div className={BurgerConstructorStyles.container}>
                 <p className='text text_type_digits-medium'>{
-                    props.cards.bunArr[0].price * 2 +
-                    props.cards.mainArr.reduce((prev, cur) => prev + cur.price, 0) +
-                    props.cards.sauceArr.reduce((prev, cur) => prev + cur.price, 0)
+                    sum
                 }</p>
                 <div className={`${BurgerConstructorStyles.currencyIcon} mr-10`}>
                     <CurrencyIcon type='primary' />
@@ -70,12 +72,9 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-    cards: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired
-    }))).isRequired
+    bunArr: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    mainArr: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    sauceArr: PropTypes.arrayOf(burgerPropTypes).isRequired
 };
 
 export default BurgerConstructor;

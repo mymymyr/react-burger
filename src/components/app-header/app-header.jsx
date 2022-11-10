@@ -8,15 +8,15 @@ function AppHeader() {
             <div className={headerStyles.flex}>
                 <div className={`${headerStyles.flex} ${headerStyles.element} p-5 mt-4 mb-4 mr-2`}>
                     <BurgerIcon type='primary' />
-                    <p className='text text_type_main-default pl-2'>
+                    <a className='text text_type_main-default pl-2'>
                         Конструктор
-                    </p>
+                    </a>
                 </div>
                 <div className={`${headerStyles.flex} ${headerStyles.element} p-5 mt-4 mb-4`}>
                     <ListIcon type='secondary' />
-                    <p className='text text_type_main-default text_color_inactive pl-2'>
+                    <a className='text text_type_main-default text_color_inactive pl-2'>
                         Лента заказов
-                    </p>
+                    </a>
                 </div>
             </div>
             <div className={headerStyles.position__center}>
@@ -25,9 +25,9 @@ function AppHeader() {
             <div className={headerStyles.position__end}>
                 <div className={`${headerStyles.flex} ${headerStyles.element} className='p-5 mt-4 mb-4`}>
                     <ProfileIcon type='secondary' />
-                    <p className='text text_type_main-default text_color_inactive pl-2'>
+                    <a className='text text_type_main-default text_color_inactive pl-2'>
                         Личный кабинет
-                    </p>
+                    </a>
                 </div>
             </div>
         </header>

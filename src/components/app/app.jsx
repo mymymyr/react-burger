@@ -14,8 +14,8 @@ function App() {
     <div className={appStyles.page}>
       <AppHeader />
       <main className={appStyles.main}>
-        <BurgerIngredients cards={cards}/>
-        <BurgerConstructor cards={cards} />
+        <BurgerIngredients {...cards}/>
+        <BurgerConstructor {...cards} />
       </main>
     </div>
   );
