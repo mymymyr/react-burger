@@ -1,0 +1,13 @@
+.flex {
+    display: flex;
+}
+
+.element {
+    position: relative;
+    min-height: 208px;
+}
+
+.position__center {
+    justify-content: center;
+    text-align: center;
+}
