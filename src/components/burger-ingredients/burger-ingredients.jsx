@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import BurgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
@@ -6,12 +6,16 @@ import { burgerPropTypes } from '../utils/dataPropTypes.js';
 import BurgerIngredientCategory from '../burger-ingredient-category/burger-ingredient-category.jsx';
 
 function BurgerIngredients(props) {
+    const bunArr = props.data.filter((item) => item.type === 'bun');
+    const mainArr = props.data.filter((item) => item.type === 'main');
+    const sauceArr = props.data.filter((item) => item.type === 'sauce');
     const Tabs = {
         bun: 'bun',
         sauce: 'sauce',
         main: 'main'
     }
-    const [current, setCurrent] = React.useState(Tabs.bun);
+    const [current, setCurrent] = useState(Tabs.bun);
+
     return (
         <section>
             <p className='text text_type_main-large pt-10 pb-5'>
@@ -29,18 +33,17 @@ function BurgerIngredients(props) {
                 </Tab>
             </div>
             <div className={BurgerIngredientsStyles.scroll}>
-                <BurgerIngredientCategory name="Булки" data={props.bunArr} />
-                <BurgerIngredientCategory name="Соусы" data={props.sauceArr} />
-                <BurgerIngredientCategory name="Начинки" data={props.mainArr} />
+                <BurgerIngredientCategory name="Булки" data={bunArr} openModal={props.openModal} />
+                <BurgerIngredientCategory name="Соусы" data={sauceArr} openModal={props.openModal} />
+                <BurgerIngredientCategory name="Начинки" data={mainArr} openModal={props.openModal} />
             </div>
         </section >
     );
 }
 
 BurgerIngredients.propTypes = {
-    bunArr: PropTypes.arrayOf(burgerPropTypes).isRequired,
-    mainArr: PropTypes.arrayOf(burgerPropTypes).isRequired,
-    sauceArr: PropTypes.arrayOf(burgerPropTypes).isRequired
+    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    openModal: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;

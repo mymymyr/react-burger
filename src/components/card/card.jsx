@@ -1,12 +1,13 @@
-import React from 'react';
 import CardStyles from './card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { burgerPropTypes } from '../utils/dataPropTypes.js';
 
 function Card(props) {
+
     return (
         props.data.map((item) => (
-            <li className={CardStyles.element} key={item._id}>
+            <li className={CardStyles.element} key={item._id} onClick={() => { props.openModal('ingredient', item) }}>
                 <img className='ml-4 mr-4' src={item.image} alt={item.name} />
                 <div className={`${CardStyles.flex} ${CardStyles.position__center} mt-1 mb-1`}>
                     <p className='text text_type_digits-default mr-2'>{item.price}</p>
@@ -22,12 +23,8 @@ function Card(props) {
 }
 
 Card.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired
-    })).isRequired
+    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    openModal: PropTypes.func.isRequired
 }
 
 export default Card;

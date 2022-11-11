@@ -1,13 +1,11 @@
-import React from 'react';
 import BurgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from '../utils/dataPropTypes.js';
 
 function BurgerConstructor(props) {
-    const sum = props.bunArr[0].price * 2 +
-        props.mainArr.reduce((prev, cur) => prev + cur.price, 0) +
-        props.sauceArr.reduce((prev, cur) => prev + cur.price, 0);
+    const sum = props.data[0].price * 2 +
+        props.data.reduce((prev, cur) => prev + cur.price, 0);
     return (
         <section className={`${BurgerConstructorStyles.section} mt-25 mr-4`}>
             <ul className={BurgerConstructorStyles.list}>
@@ -15,25 +13,13 @@ function BurgerConstructor(props) {
                     <ConstructorElement
                         type='top'
                         isLocked={true}
-                        text={props.bunArr[0].name + ' (верх)'}
-                        price={props.bunArr[0].price}
-                        thumbnail={props.bunArr[0].image}
+                        text={props.data[0].name + ' (верх)'}
+                        price={props.data[0].price}
+                        thumbnail={props.data[0].image}
                     />
                 </li>
                 <ul className={`${BurgerConstructorStyles.list} ${BurgerConstructorStyles.scroll}`}>
-                    {props.mainArr.map((item, index) => (
-                        <li key={`${item._id}__${index}`} className={`${BurgerConstructorStyles.element} mb-4`}>
-                            <div className={BurgerConstructorStyles.dragIcon}>
-                                <DragIcon type='primary' />
-                            </div>
-                            <ConstructorElement
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                            />
-                        </li>
-                    ))}
-                    {props.sauceArr.map((item, index) => (
+                    {props.data.map((item, index) => (
                         <li key={`${item._id}__${index}`} className={`${BurgerConstructorStyles.element} mb-4`}>
                             <div className={BurgerConstructorStyles.dragIcon}>
                                 <DragIcon type='primary' />
@@ -50,9 +36,9 @@ function BurgerConstructor(props) {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={props.bunArr[0].name + ' (низ)'}
-                        price={props.bunArr[0].price}
-                        thumbnail={props.bunArr[0].image}
+                        text={props.data[0].name + ' (низ)'}
+                        price={props.data[0].price}
+                        thumbnail={props.data[0].image}
                     />
                 </li>
             </ul>
@@ -63,7 +49,7 @@ function BurgerConstructor(props) {
                 <div className={`${BurgerConstructorStyles.currencyIcon} mr-10`}>
                     <CurrencyIcon type='primary' />
                 </div>
-                <Button type='primary' size='large' htmlType='button'>
+                <Button type='primary' size='large' htmlType='button' onClick={() => { props.openModal("order", props.data); }}>
                     Оформить заказ
                 </Button>
             </div>
@@ -72,9 +58,8 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-    bunArr: PropTypes.arrayOf(burgerPropTypes).isRequired,
-    mainArr: PropTypes.arrayOf(burgerPropTypes).isRequired,
-    sauceArr: PropTypes.arrayOf(burgerPropTypes).isRequired
+    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    openModal: PropTypes.func.isRequired
 };
 
 export default BurgerConstructor;
