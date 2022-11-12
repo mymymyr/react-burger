@@ -4,46 +4,49 @@ import AppHeader from '../app-header/app-header.jsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
 import Modal from '../modal/modal.jsx';
+import { getIngredients } from '../utils/burger-api.js'
+import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
+import OrderDetails from '../order-details/order-details.jsx';
 
 function App() {
-  const url = 'https://norma.nomoreparties.space/api/ingredients';
-
   const [state, setState] = useState({
     data: null,
     loading: false
   });
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [item, setItem] = useState({});
-  const [modalType, setModalType] = useState({});
+  const Modals = { Ingredient: 'ingredient', Order: 'order' };
 
-  function handleOpenModal(type, item) {
+  const [modalCurrentType, setModalCurrentType] = useState(null);
+  const [item, setItem] = useState(null);
+
+
+  function handleOpenIngredientModal(item) {
     setItem(item);
-    setModalType(type);
-    setModalVisible({ modalVisible: true });
+    setModalCurrentType(Modals.Ingredient);
+  }
+
+  function handleOpenOrderModal(item) {
+    setItem(item);
+    setModalCurrentType(Modals.Order);
   }
 
   function handleCloseModal() {
-    setModalVisible({ modalVisible: false });
+    setModalCurrentType(null)
   }
 
   useEffect(() => {
-    async function fetchData() {
-      setState({ ...state, loading: true });
-      try {
-        const res = await fetch(url);
-        if (!res.ok) {
-          const message = `Произошла ошибка: ${res.status}`;
-          throw new Error(message);
-        };
-        const data = await res.json();
+
+    setState({ ...state, loading: true });
+
+    getIngredients().then(
+      (data) => {
         setState({ ...state, data: data.data, loading: false });
-      } catch (err) {
-        console.log(err);
-        setState({ ...state, loading: false });
       }
-    };
-    fetchData();
+    ).catch((err) => {
+      console.log(err);
+      setState({ ...state, loading: false });
+    })
+
   }, []);
 
   return (
@@ -52,13 +55,21 @@ function App() {
       {state.data && (
         <>
           <main className={appStyles.main}>
-            <BurgerIngredients data={state.data} openModal={handleOpenModal} />
-            <BurgerConstructor data={state.data} openModal={handleOpenModal} />
+            <BurgerIngredients data={state.data} openModal={handleOpenIngredientModal} />
+            <BurgerConstructor data={state.data} openModal={handleOpenOrderModal} />
           </main>
-          <div style={{ overflow: 'hidden' }}>
+          <div className={appStyles.overflow}>
             {
-              modalVisible.modalVisible &&
-              <Modal onCloseModal={handleCloseModal} item={item} type={modalType}></Modal>
+              modalCurrentType === Modals.Ingredient &&
+              <Modal onCloseModal={handleCloseModal} title='Детали ингредиента'>
+                <IngredientDetails item={item} />
+              </Modal>
+            }
+            {
+              modalCurrentType === Modals.Order &&
+              <Modal onCloseModal={handleCloseModal} title=''>
+                <OrderDetails />
+              </Modal>
             }
           </div>
         </>

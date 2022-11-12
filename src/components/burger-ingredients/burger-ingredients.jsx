@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import BurgerIngredientsStyles from './burger-ingredients.module.css';
+import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from '../utils/dataPropTypes.js';
 import BurgerIngredientCategory from '../burger-ingredient-category/burger-ingredient-category.jsx';
 
-function BurgerIngredients(props) {
-    const bunArr = props.data.filter((item) => item.type === 'bun');
-    const mainArr = props.data.filter((item) => item.type === 'main');
-    const sauceArr = props.data.filter((item) => item.type === 'sauce');
+function BurgerIngredients({ data, openModal }) {
+    const bunArr = data.filter((item) => item.type === 'bun');
+    const mainArr = data.filter((item) => item.type === 'main');
+    const sauceArr = data.filter((item) => item.type === 'sauce');
     const Tabs = {
         bun: 'bun',
         sauce: 'sauce',
@@ -21,7 +21,7 @@ function BurgerIngredients(props) {
             <p className='text text_type_main-large pt-10 pb-5'>
                 Cоберите бургер
             </p>
-            <div className={`${BurgerIngredientsStyles.flex} mb-10`}>
+            <div className={`${burgerIngredientsStyles.flex} mb-10`}>
                 <Tab value={Tabs.bun} active={current === Tabs.bun} onClick={setCurrent}>
                     Булки
                 </Tab>
@@ -32,10 +32,10 @@ function BurgerIngredients(props) {
                     Начинки
                 </Tab>
             </div>
-            <div className={BurgerIngredientsStyles.scroll}>
-                <BurgerIngredientCategory name="Булки" data={bunArr} openModal={props.openModal} />
-                <BurgerIngredientCategory name="Соусы" data={sauceArr} openModal={props.openModal} />
-                <BurgerIngredientCategory name="Начинки" data={mainArr} openModal={props.openModal} />
+            <div className={burgerIngredientsStyles.scroll}>
+                <BurgerIngredientCategory name="Булки" data={bunArr} openModal={openModal} />
+                <BurgerIngredientCategory name="Соусы" data={sauceArr} openModal={openModal} />
+                <BurgerIngredientCategory name="Начинки" data={mainArr} openModal={openModal} />
             </div>
         </section >
     );
