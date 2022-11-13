@@ -1,7 +1,8 @@
 import burgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { burgerPropTypes } from '../utils/dataPropTypes.js';
+import { BURGER_PROP_TYPES } from '../utils/dataPropTypes.js';
+import { BURGER_COMPOSITION } from '../utils/constants.js';
 
 function BurgerConstructor({ data, openModal }) {
     const sum = data[0].price * 2 +
@@ -20,7 +21,7 @@ function BurgerConstructor({ data, openModal }) {
                 </li>
                 <ul className={`${burgerConstructorStyles.list} ${burgerConstructorStyles.scroll}`}>
                     {data.map((item, index) => (
-                        item.type !== 'bun' && (
+                        item.type !== BURGER_COMPOSITION.bun && (
                             <li key={`${item._id}__${index}`} className={`${burgerConstructorStyles.element} mb-4`}>
                                 <div className={burgerConstructorStyles.dragIcon}>
                                     <DragIcon type='primary' />
@@ -60,7 +61,7 @@ function BurgerConstructor({ data, openModal }) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    data: PropTypes.arrayOf(BURGER_PROP_TYPES).isRequired,
     openModal: PropTypes.func.isRequired
 };
 

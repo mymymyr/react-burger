@@ -1,5 +1,5 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
-import { dataItemPropTypes } from '../utils/dataPropTypes.js'
+import { DATA_ITEM_PROP_TYPES } from '../utils/dataPropTypes.js';
 
 function IngredientDetails({ item }) {
     return (
@@ -29,7 +29,7 @@ function IngredientDetails({ item }) {
 }
 
 IngredientDetails.propTypes = {
-    item: dataItemPropTypes.isRequired
+    item: DATA_ITEM_PROP_TYPES.isRequired
 }
 
 export default IngredientDetails;

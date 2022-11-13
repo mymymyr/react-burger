@@ -1,7 +1,7 @@
 import cardStyles from './card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { burgerPropTypes } from '../utils/dataPropTypes.js';
+import { BURGER_PROP_TYPES } from '../utils/dataPropTypes.js';
 
 function Card({ data, openModal }) {
 
@@ -23,7 +23,7 @@ function Card({ data, openModal }) {
 }
 
 Card.propTypes = {
-    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    data: PropTypes.arrayOf(BURGER_PROP_TYPES).isRequired,
     openModal: PropTypes.func.isRequired
 }
 

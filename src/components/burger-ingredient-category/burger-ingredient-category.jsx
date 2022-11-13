@@ -1,7 +1,7 @@
 import burgerIngredientCategoryStyles from './burger-ingredient-category.module.css';
 import Card from '../card/card.jsx';
 import PropTypes from 'prop-types';
-import { burgerPropTypes } from '../utils/dataPropTypes.js';
+import { BURGER_PROP_TYPES } from '../utils/dataPropTypes.js';
 
 function BurgerIngredientCategory({ data, name, openModal }) {
     return (
@@ -17,7 +17,7 @@ function BurgerIngredientCategory({ data, name, openModal }) {
 }
 
 BurgerIngredientCategory.propTypes = {
-    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    data: PropTypes.arrayOf(BURGER_PROP_TYPES).isRequired,
     name: PropTypes.string.isRequired,
     openModal: PropTypes.func.isRequired
 };

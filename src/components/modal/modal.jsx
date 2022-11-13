@@ -4,7 +4,7 @@ import modalStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay.jsx';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { modalRoot } from '../utils/constants.js'
+import { MODAL_ROOT } from '../utils/constants.js';
 
 
 function Modal({ title = '', onCloseModal, children }) {
@@ -40,7 +40,7 @@ function Modal({ title = '', onCloseModal, children }) {
                 </div>
             </>
         ),
-        modalRoot
+        MODAL_ROOT
     );
 }
 
