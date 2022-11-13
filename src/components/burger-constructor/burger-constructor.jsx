@@ -20,16 +20,18 @@ function BurgerConstructor({ data, openModal }) {
                 </li>
                 <ul className={`${burgerConstructorStyles.list} ${burgerConstructorStyles.scroll}`}>
                     {data.map((item, index) => (
-                        <li key={`${item._id}__${index}`} className={`${burgerConstructorStyles.element} mb-4`}>
-                            <div className={burgerConstructorStyles.dragIcon}>
-                                <DragIcon type='primary' />
-                            </div>
-                            <ConstructorElement
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                            />
-                        </li>
+                        item.type !== 'bun' && (
+                            <li key={`${item._id}__${index}`} className={`${burgerConstructorStyles.element} mb-4`}>
+                                <div className={burgerConstructorStyles.dragIcon}>
+                                    <DragIcon type='primary' />
+                                </div>
+                                <ConstructorElement
+                                    text={item.name}
+                                    price={item.price}
+                                    thumbnail={item.image}
+                                />
+                            </li>
+                        )
                     ))}
                 </ul>
                 <li className='ml-8 mb-10 mt-4'>

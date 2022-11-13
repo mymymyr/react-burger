@@ -14,7 +14,7 @@ function App() {
     loading: false
   });
 
-  const Modals = { Ingredient: 'ingredient', Order: 'order' };
+  const MODALS = { Ingredient: 'ingredient', Order: 'order' };
 
   const [modalCurrentType, setModalCurrentType] = useState(null);
   const [item, setItem] = useState(null);
@@ -22,12 +22,12 @@ function App() {
 
   function handleOpenIngredientModal(item) {
     setItem(item);
-    setModalCurrentType(Modals.Ingredient);
+    setModalCurrentType(MODALS.Ingredient);
   }
 
   function handleOpenOrderModal(item) {
     setItem(item);
-    setModalCurrentType(Modals.Order);
+    setModalCurrentType(MODALS.Order);
   }
 
   function handleCloseModal() {
@@ -60,16 +60,18 @@ function App() {
           </main>
           <div className={appStyles.overflow}>
             {
-              modalCurrentType === Modals.Ingredient &&
-              <Modal onCloseModal={handleCloseModal} title='Детали ингредиента'>
-                <IngredientDetails item={item} />
-              </Modal>
+              modalCurrentType === MODALS.Ingredient && (
+                <Modal onCloseModal={handleCloseModal} title='Детали ингредиента'>
+                  <IngredientDetails item={item} />
+                </Modal>
+              )
             }
             {
-              modalCurrentType === Modals.Order &&
-              <Modal onCloseModal={handleCloseModal} title=''>
-                <OrderDetails />
-              </Modal>
+              modalCurrentType === MODALS.Order && (
+                <Modal onCloseModal={handleCloseModal}>
+                  <OrderDetails />
+                </Modal>
+              )
             }
           </div>
         </>

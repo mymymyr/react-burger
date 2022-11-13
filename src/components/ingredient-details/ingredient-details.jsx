@@ -29,7 +29,7 @@ function IngredientDetails({ item }) {
 }
 
 IngredientDetails.propTypes = {
-    item: dataItemPropTypes
+    item: dataItemPropTypes.isRequired
 }
 
 export default IngredientDetails;

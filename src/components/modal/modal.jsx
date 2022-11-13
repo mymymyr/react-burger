@@ -7,7 +7,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { modalRoot } from '../utils/constants.js'
 
 
-function Modal({ title, onCloseModal, children }) {
+function Modal({ title = '', onCloseModal, children }) {
     const modalOverlayRef = useRef(null)
     function closeModal(e) {
         e.target.classList.contains(modalOverlayRef.current.className) &&
@@ -46,7 +46,7 @@ function Modal({ title, onCloseModal, children }) {
 
 Modal.propTypes = {
     onCloseModal: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string
 };
 
 export default Modal;
