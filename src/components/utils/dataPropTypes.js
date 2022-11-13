@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 
-const BURGER_PROP_TYPES = PropTypes.shape({
+const burgerPropTypes = PropTypes.shape({
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired
 });
 
-const DATA_ITEM_PROP_TYPES = PropTypes.shape({
+const dataItemPropTypes = PropTypes.shape({
     image_large: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     calories: PropTypes.number.isRequired,
@@ -17,4 +17,4 @@ const DATA_ITEM_PROP_TYPES = PropTypes.shape({
 });
 
 
-export { BURGER_PROP_TYPES, DATA_ITEM_PROP_TYPES };
+export { burgerPropTypes, dataItemPropTypes };

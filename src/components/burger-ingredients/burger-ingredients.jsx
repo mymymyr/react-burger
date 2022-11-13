@@ -2,7 +2,7 @@ import { useState } from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { BURGER_PROP_TYPES } from '../utils/dataPropTypes.js';
+import { burgerPropTypes } from '../utils/dataPropTypes.js';
 import BurgerIngredientCategory from '../burger-ingredient-category/burger-ingredient-category.jsx';
 import { BURGER_COMPOSITION } from '../utils/constants.js';
 
@@ -38,7 +38,7 @@ function BurgerIngredients({ data, openModal }) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(BURGER_PROP_TYPES).isRequired,
+    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
     openModal: PropTypes.func.isRequired
 };
 
