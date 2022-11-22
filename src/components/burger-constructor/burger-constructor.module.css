@@ -37,7 +37,7 @@
     overflow-y: scroll;
 }
 
-.scroll > li:last-child {
+.scroll>li:last-child {
     margin-bottom: 0;
 }
 

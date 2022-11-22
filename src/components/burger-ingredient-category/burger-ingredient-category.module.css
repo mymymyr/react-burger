@@ -9,6 +9,6 @@
     justify-content: center;
 }
 
-.list > li {
+.list>li {
     cursor: pointer;
 }

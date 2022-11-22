@@ -1,17 +1,16 @@
-import React from 'react';
-import BurgerIngredientCategoryStyles from './burger-ingredient-category.module.css';
+import burgerIngredientCategoryStyles from './burger-ingredient-category.module.css';
 import Card from '../card/card.jsx';
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from '../utils/dataPropTypes.js';
 
-function BurgerIngredientCategory(props) {
+function BurgerIngredientCategory({ data, name, openModal }) {
     return (
         <>
             <p className='text text_type_main-medium mb-6'>
-                {props.name}
+                {name}
             </p>
-            <ul className={BurgerIngredientCategoryStyles.list}>
-                <Card data={props.data} />
+            <ul className={burgerIngredientCategoryStyles.list}>
+                <Card data={data} openModal={openModal} />
             </ul>
         </>
     );
@@ -19,7 +18,8 @@ function BurgerIngredientCategory(props) {
 
 BurgerIngredientCategory.propTypes = {
     data: PropTypes.arrayOf(burgerPropTypes).isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    openModal: PropTypes.func.isRequired
 };
 
 export default BurgerIngredientCategory;

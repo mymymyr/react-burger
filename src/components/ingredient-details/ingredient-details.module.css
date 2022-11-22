@@ -1,0 +1,21 @@
+.maxWidth {
+    max-width: 520px;
+}
+
+.list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 520px;
+    column-gap: 20px;
+    padding-bottom: 60px;
+}
+
+.listItem {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    width: 100%;
+}

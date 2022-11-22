@@ -22,3 +22,8 @@
 .position__end {
     justify-self: end;
 }
+
+.link {
+    text-decoration: none;
+    color: inherit
+}

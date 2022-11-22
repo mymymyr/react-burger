@@ -1,0 +1,9 @@
+.maxWidth {
+    max-width: 520px;
+}
+
+.CheckMarkIcon svg {
+    display: flex;
+    height: 50px;
+    width: 50px;
+}
