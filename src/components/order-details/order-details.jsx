@@ -1,10 +1,8 @@
 import orderDetailsStyles from './order-details.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useContext } from 'react';
-import { OrderContext } from '../utils/contexts.jsx';
+import PropTypes from 'prop-types';
 
-function OrderDetails() {
-    const orderNumber = useContext(OrderContext);
+function OrderDetails({ orderNumber }) {
     return (
         <>
             <p className={`${orderDetailsStyles.maxWidth} text text_type_digits-large mt-10`}>{orderNumber}</p>
@@ -17,5 +15,9 @@ function OrderDetails() {
         </>
     );
 }
+
+OrderDetails.propTypes = {
+    orderNumber: PropTypes.number.isRequired
+};
 
 export default OrderDetails;

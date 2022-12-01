@@ -4,7 +4,7 @@ import modalStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay.jsx';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { MODAL_ROOT } from '../utils/constants.js';
+import { MODAL_ROOT } from '../../utils/constants.js';
 
 
 function Modal({ title = '', onCloseModal, children }) {
@@ -15,10 +15,16 @@ function Modal({ title = '', onCloseModal, children }) {
     }
 
     useEffect(() => {
-        document.addEventListener("keydown", onCloseModal, false);
+        function closeByEscape(evt) {
+            if (evt.key === 'Escape') {
+                onCloseModal();
+            }
+        }
+
+        document.addEventListener('keydown', closeByEscape);
         return () => {
-            document.removeEventListener("keydown", onCloseModal, false);
-        };
+            document.removeEventListener('keydown', closeByEscape);
+        }
     }, []);
 
     return createPortal(

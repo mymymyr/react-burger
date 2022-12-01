@@ -4,11 +4,11 @@ import AppHeader from '../app-header/app-header.jsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
 import Modal from '../modal/modal.jsx';
-import { getIngredients, createOrder } from '../utils/burger-api.js';
+import { getIngredients, createOrder } from '../../utils/burger-api.js';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import OrderDetails from '../order-details/order-details.jsx';
-import { MODALS } from '../utils/constants.js';
-import { BurgerContext, OrderContext } from '../utils/contexts.jsx';
+import { MODALS } from '../../utils/constants.js';
+import { BurgerContext } from '../../utils/contexts.jsx';
 
 function App() {
   const [state, setState] = useState({
@@ -37,7 +37,7 @@ function App() {
   }
 
   function handleCloseModal() {
-    setModalCurrentType(null)
+    setModalCurrentType(null);
   }
 
   useEffect(() => {
@@ -77,9 +77,7 @@ function App() {
             {
               modalCurrentType === MODALS.Order && (
                 <Modal onCloseModal={handleCloseModal}>
-                  <OrderContext.Provider value={orderNumber}>
-                    <OrderDetails />
-                  </OrderContext.Provider>
+                  <OrderDetails orderNumber={orderNumber} />
                 </Modal>
               )
             }
