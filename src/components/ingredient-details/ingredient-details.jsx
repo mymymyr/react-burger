@@ -1,5 +1,5 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
-import { dataItemPropTypes } from '../utils/dataPropTypes.js';
+import { dataItemPropTypes } from '../../utils/dataPropTypes.js';
 
 function IngredientDetails({ item }) {
     return (

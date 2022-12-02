@@ -1,12 +1,22 @@
+import { useContext, useMemo } from 'react';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { burgerPropTypes } from '../utils/dataPropTypes.js';
-import { BURGER_COMPOSITION } from '../utils/constants.js';
+import { BURGER_COMPOSITION } from '../../utils/constants.js';
+import { BurgerContext } from '../../utils/contexts.jsx';
 
-function BurgerConstructor({ data, openModal }) {
-    const sum = data[0].price * 2 +
-        data.reduce((prev, cur) => prev + cur.price, 0);
+function BurgerConstructor({ openModal }) {
+    const { data } = useContext(BurgerContext);
+    const bun = useMemo(() => data.filter((item) => item.type === BURGER_COMPOSITION.bun)[0], [data]);
+    const internalIngredients = useMemo(() => data.filter((item) => item.type !== BURGER_COMPOSITION.bun), [data]);
+    const sum = useMemo(() => bun.price * 2 +
+        internalIngredients.reduce((prev, cur) => prev + cur.price, 0), [bun, internalIngredients]);
+    const getIdsIngredients = useMemo(() => {
+        const resultArr = internalIngredients.reduce((arr, item) => { arr.push(item._id); return arr; }, []);
+        resultArr.push(bun._id);
+        return resultArr;
+    }, [internalIngredients, bun]);
+
     return (
         <section className={`${burgerConstructorStyles.section} mt-25 mr-4`}>
             <ul className={burgerConstructorStyles.list}>
@@ -14,34 +24,32 @@ function BurgerConstructor({ data, openModal }) {
                     <ConstructorElement
                         type='top'
                         isLocked={true}
-                        text={data[0].name + ' (верх)'}
-                        price={data[0].price}
-                        thumbnail={data[0].image}
+                        text={bun.name + ' (верх)'}
+                        price={bun.price}
+                        thumbnail={bun.image}
                     />
                 </li>
                 <ul className={`${burgerConstructorStyles.list} ${burgerConstructorStyles.scroll}`}>
-                    {data.map((item, index) => (
-                        item.type !== BURGER_COMPOSITION.bun && (
-                            <li key={`${item._id}__${index}`} className={`${burgerConstructorStyles.element} mb-4`}>
-                                <div className={burgerConstructorStyles.dragIcon}>
-                                    <DragIcon type='primary' />
-                                </div>
-                                <ConstructorElement
-                                    text={item.name}
-                                    price={item.price}
-                                    thumbnail={item.image}
-                                />
-                            </li>
-                        )
-                    ))}
+                    {useMemo(() => internalIngredients.map((item, index) => (
+                        <li key={`${item._id}__${index}`} className={`${burgerConstructorStyles.element} mb-4`}>
+                            <div className={burgerConstructorStyles.dragIcon}>
+                                <DragIcon type='primary' />
+                            </div>
+                            <ConstructorElement
+                                text={item.name}
+                                price={item.price}
+                                thumbnail={item.image}
+                            />
+                        </li>
+                    )), [internalIngredients])}
                 </ul>
                 <li className='ml-8 mb-10 mt-4'>
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={data[0].name + ' (низ)'}
-                        price={data[0].price}
-                        thumbnail={data[0].image}
+                        text={bun.name + ' (низ)'}
+                        price={bun.price}
+                        thumbnail={bun.image}
                     />
                 </li>
             </ul>
@@ -52,7 +60,7 @@ function BurgerConstructor({ data, openModal }) {
                 <div className={`${burgerConstructorStyles.currencyIcon} mr-10`}>
                     <CurrencyIcon type='primary' />
                 </div>
-                <Button type='primary' size='large' htmlType='button' onClick={() => { openModal(data); }}>
+                <Button type='primary' size='large' htmlType='button' onClick={() => { openModal(getIdsIngredients); }}>
                     Оформить заказ
                 </Button>
             </div>
@@ -61,7 +69,6 @@ function BurgerConstructor({ data, openModal }) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
     openModal: PropTypes.func.isRequired
 };
 

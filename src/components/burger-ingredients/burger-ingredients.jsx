@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState, useMemo } from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { burgerPropTypes } from '../utils/dataPropTypes.js';
 import BurgerIngredientCategory from '../burger-ingredient-category/burger-ingredient-category.jsx';
-import { BURGER_COMPOSITION } from '../utils/constants.js';
+import { BURGER_COMPOSITION } from '../../utils/constants.js';
+import { BurgerContext } from '../../utils/contexts.jsx';
 
-function BurgerIngredients({ data, openModal }) {
-    const bunArr = data.filter((item) => item.type === BURGER_COMPOSITION.bun);
-    const mainArr = data.filter((item) => item.type === BURGER_COMPOSITION.main);
-    const sauceArr = data.filter((item) => item.type === BURGER_COMPOSITION.sauce);
+function BurgerIngredients({ openModal }) {
+    const { data } = useContext(BurgerContext);
+    const bunArr = useMemo(() => data.filter((item) => item.type === BURGER_COMPOSITION.bun), [data]);
+    const mainArr = useMemo(() => data.filter((item) => item.type === BURGER_COMPOSITION.main), [data]);
+    const sauceArr = useMemo(() => data.filter((item) => item.type === BURGER_COMPOSITION.sauce), [data]);
     const [current, setCurrent] = useState(BURGER_COMPOSITION.bun);
 
     return (
@@ -38,7 +39,6 @@ function BurgerIngredients({ data, openModal }) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
     openModal: PropTypes.func.isRequired
 };
 
