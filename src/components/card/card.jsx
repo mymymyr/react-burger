@@ -2,29 +2,40 @@ import cardStyles from './card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from '../../utils/dataPropTypes.js';
-import { useMemo } from 'react';
+import { useDrag, DragPreviewImage } from 'react-dnd';
+import { useSelector } from 'react-redux';
 
-function Card({ data, openModal }) {
+function Card({ item, openModal }) {
+    const { counters } = useSelector(store => store.burgerIngredients);
 
+    const [{ opacity }, ref, preview] = useDrag({
+        type: 'ingredient',
+        item: { item },
+        collect: monitor => ({
+            opacity: monitor.isDragging() ? 0.5 : 1
+        })
+    });
+    const counterVisible = (counters[item._id] !== undefined) && (counters[item._id] !== 0);
     return (
-        useMemo(() => data.map((item) => (
-            <li className={cardStyles.element} key={item._id} onClick={() => { openModal(item) }}>
-                <img className='ml-4 mr-4' src={item.image} alt={item.name} />
-                <div className={`${cardStyles.flex} ${cardStyles.position__center} mt-1 mb-1`}>
-                    <p className='text text_type_digits-default mr-2'>{item.price}</p>
-                    <CurrencyIcon type='primary' />
-                </div>
-                <p className={`${cardStyles.position__center} text text_type_main-small`}>
-                    {item.name}
-                </p>
-                <Counter count={1} size='default' extraClass='m-1' />
-            </li>
-        )), [data])
+        <li ref={ref} className={cardStyles.element} onClick={() => { openModal(item) }}>
+            <DragPreviewImage connect={preview} src={item.image} />
+            <img className='ml-4 mr-4' src={item.image} alt={item.name} />
+            <div className={`${cardStyles.flex} ${cardStyles.position__center} mt-1 mb-1`}>
+                <p className='text text_type_digits-default mr-2'>{item.price}</p>
+                <CurrencyIcon type='primary' />
+            </div>
+            <p className={`${cardStyles.position__center} text text_type_main-small`}>
+                {item.name}
+            </p>
+            { counterVisible &&
+                (<Counter count={counters[item._id]} size='default' extraClass='m-1' />)
+            }
+        </li>
     );
 }
 
 Card.propTypes = {
-    data: PropTypes.arrayOf(burgerPropTypes).isRequired,
+    item: burgerPropTypes.isRequired,
     openModal: PropTypes.func.isRequired
 }
 

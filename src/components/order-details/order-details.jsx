@@ -1,8 +1,10 @@
 import orderDetailsStyles from './order-details.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-function OrderDetails({ orderNumber }) {
+function OrderDetails() {
+    const { order } = useSelector(store => store.order);
+    const orderNumber = order.number;
     return (
         <>
             <p className={`${orderDetailsStyles.maxWidth} text text_type_digits-large mt-10`}>{orderNumber}</p>
@@ -15,9 +17,5 @@ function OrderDetails({ orderNumber }) {
         </>
     );
 }
-
-OrderDetails.propTypes = {
-    orderNumber: PropTypes.number.isRequired
-};
 
 export default OrderDetails;

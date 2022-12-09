@@ -1,0 +1,9 @@
+.element {
+    display: flex;
+    align-items: center;
+}
+
+.dragIcon {
+    min-width: 32px;
+    cursor: pointer;
+}

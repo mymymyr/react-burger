@@ -8,18 +8,16 @@ function checkResponse(res) {
     return res.json();
 }
 
-
 async function request(url, options) {
     const res = await fetch(url, options);
     return checkResponse(res);
 }
 
-
-function getIngredients() {
+function getIngredientsRequest() {
     return request(`${BURGER_API_URL}/ingredients`);
 }
 
-function createOrder(idsIngredients) {
+function createOrderRequest(idsIngredients) {
     return request(`${BURGER_API_URL}/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,4 +25,4 @@ function createOrder(idsIngredients) {
     });
 }
 
-export { getIngredients, createOrder };
+export { getIngredientsRequest, createOrderRequest };
