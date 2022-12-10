@@ -10,42 +10,32 @@ import OrderDetails from '../order-details/order-details.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { CLOSE_INGREDIENT_MODAL, OPEN_INGREDIENT_MODAL } from '../../services/actions/current-ingredient.js';
-import { CLOSE_ORDER_MODAL, createOrder } from '../../services/actions/order.js';
-import { CLEAR_BURGER_INGREDIENTS } from '../../services/actions/burger-ingredients.js';
+import { closeingredientModalAction, openIngredientModalAction } from '../../services/actions/current-ingredient.js';
+import { closeOrderModal, createOrder } from '../../services/actions/order.js';
+import { clearBurgerIngredientsAction } from '../../services/actions/burger-ingredients.js';
 
 function App() {
   const dispatch = useDispatch();
-
   const { ingredients } = useSelector(store => store.ingredients);
   const { ingredient } = useSelector(store => store.currentIngredient);
   const { order } = useSelector(store => store.order);
 
-  function handleOpenIngredientModal(item) {
-    dispatch({
-      type: OPEN_INGREDIENT_MODAL,
-      ingredient: { ...item }
-    })
+  const handleOpenIngredientModal = (item) => {
+    dispatch(openIngredientModalAction(item));
   }
 
-  function handleOpenOrderModal(item) {
+  const handleOpenOrderModal = (item) => {
     dispatch(createOrder(item));
   }
 
-  function handleCloseModal() {
-    dispatch({
-      type: CLOSE_INGREDIENT_MODAL
-    });
-    dispatch({
-      type: CLOSE_ORDER_MODAL
-    })
+  const handleCloseModal = () => {
+    dispatch(closeingredientModalAction());
+    dispatch(closeOrderModal());
   }
 
   useEffect(() => {
     if (order !== null) {
-      dispatch({
-        type: CLEAR_BURGER_INGREDIENTS
-      });
+      dispatch(clearBurgerIngredientsAction());
       return;
     }
     dispatch(getIngredients());

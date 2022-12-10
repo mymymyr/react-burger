@@ -13,7 +13,7 @@ function BurgerIngredientCategory({ data, name, openModal, sectionRef }) {
             <ul className={burgerIngredientCategoryStyles.list}>
                 {
                     useMemo(() => data.map((item) => (
-                        <Card key={item.uuid} item={item} openModal={openModal} />
+                        <Card key={item._id} item={item} openModal={openModal} />
                     )), [data, openModal])
                 }
             </ul>

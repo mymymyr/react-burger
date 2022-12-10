@@ -9,13 +9,13 @@ import { MODAL_ROOT } from '../../utils/constants.js';
 
 function Modal({ title = '', onCloseModal, children }) {
     const modalOverlayRef = useRef(null)
-    function closeModal(e) {
+    const closeModal = (e) => {
         e.target.classList.contains(modalOverlayRef.current.className) &&
             onCloseModal();
     }
 
     useEffect(() => {
-        function closeByEscape(evt) {
+        const closeByEscape = (evt) => {
             if (evt.key === 'Escape') {
                 onCloseModal();
             }

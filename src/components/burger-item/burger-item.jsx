@@ -4,49 +4,36 @@ import { burgerPropTypes } from '../../utils/dataPropTypes.js';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop, useDrag, DragPreviewImage } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import { ERASE_BURGER_IGREDIENT, REORDER_BURGER_IGREDIENT, REORDER_BURGER_IGREDIENT_PREVIEW, REORDER_BURGER_IGREDIENT_STATUS } from '../../services/actions/burger-ingredients.js';
+import {
+    eraseBurgerIngredientAction,
+    reorderBurgerIngredientAction,
+    reorderBurgerIngredientPreviewAction,
+    reorderBurgerIngredientStatusAction,
+    reorderBurgerSetPreviewIndexAction
+} from '../../services/actions/burger-ingredients.js';
 
 function BurgerItem({ item, index }) {
     const dispatch = useDispatch();
-    let {preview, previewNewIndex } = useSelector(store => store.burgerIngredients);
+    let { preview, previewNewIndex } = useSelector(store => store.burgerIngredients);
 
     const deleteItem = (index) => {
-        dispatch({
-            type: ERASE_BURGER_IGREDIENT,
-            index: index
-        });
+        dispatch(eraseBurgerIngredientAction(index));
     };
 
     const setDragStatus = (status) => {
-        dispatch({
-            type: REORDER_BURGER_IGREDIENT_STATUS,
-            status: status
-        });
+        dispatch(reorderBurgerIngredientStatusAction(status));
     };
 
     const setPreviewNewIndex = (index) => {
-        dispatch({
-            type: REORDER_BURGER_IGREDIENT_STATUS,
-            newIndex: index
-        });
+        dispatch(reorderBurgerSetPreviewIndexAction(index));
     };
 
     const reorderItem = (item, toIndex) => {
-        dispatch({
-            type: REORDER_BURGER_IGREDIENT,
-            item: { ...item },
-            newindex: toIndex,
-            index: item.index
-        });
+        dispatch(reorderBurgerIngredientAction(item, toIndex));
     };
 
     const reorderItemPreview = (item, toIndex) => {
-        dispatch({
-            type: REORDER_BURGER_IGREDIENT_PREVIEW,
-            item: { ...item },
-            newindex: toIndex,
-            index: item.index
-        });
+        dispatch(reorderBurgerIngredientPreviewAction(item, toIndex));
     };
     const [, ref, previewDrag] = useDrag({
         type: 'burgerIngredient',
@@ -69,7 +56,7 @@ function BurgerItem({ item, index }) {
         }),
         drop(item, monitor) {
             reorderItem(item, index);
-        }, 
+        },
         hover(item) {
             if ((preview && previewNewIndex === -1) || previewNewIndex === index + 1) {
                 return;
@@ -77,7 +64,7 @@ function BurgerItem({ item, index }) {
             previewNewIndex = index;
             setPreviewNewIndex(index);
             reorderItemPreview(item, index);
-        } 
+        }
     });
 
     return (

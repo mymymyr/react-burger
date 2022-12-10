@@ -5,21 +5,31 @@ export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL';
 
-export function createOrder(item) {
-    return function (dispatch) {
-        dispatch({
-            type: GET_ORDER_REQUEST
-        });
+const getOrdersRequestAction = () => ({
+    type: GET_ORDER_REQUEST
+});
+
+const getOrderSuccessAction = (res) => ({
+    type: GET_ORDER_SUCCESS,
+    order: res.order
+});
+
+const getOrderFailedAction = () => ({
+    type: GET_ORDER_FAILED
+});
+
+export const createOrder = (item) => {
+    return (dispatch) => {
+        dispatch(getOrdersRequestAction());
         createOrderRequest(item).then(res => {
-            dispatch({
-                type: GET_ORDER_SUCCESS,
-                order: res.order
-            });
+            dispatch(getOrderSuccessAction(res));
         }).catch((err) => {
-            dispatch({
-                type: GET_ORDER_FAILED
-            });
+            dispatch(getOrderFailedAction());
             console.log(err);
         });;
     };
 }
+
+export const closeOrderModal = () => ({
+    type: CLOSE_ORDER_MODAL
+});

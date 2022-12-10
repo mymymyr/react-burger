@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { BURGER_COMPOSITION } from '../../utils/constants.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { INSERT_BURGER_IGREDIENT } from '../../services/actions/burger-ingredients.js';
+import { insertBurgerIngredientsAction } from '../../services/actions/burger-ingredients.js';
 import BurgerItem from '../burger-item/burger-item.jsx';
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor({ openModal }) {
     let { ingredients, ingredientsPreview, preview } = useSelector(store => store.burgerIngredients);
@@ -15,11 +16,8 @@ function BurgerConstructor({ openModal }) {
     const bun = ingredients.find((item) => item.type === BURGER_COMPOSITION.bun);
     const dispatch = useDispatch();
 
-    const addItem = (item) => {
-        dispatch({
-            type: INSERT_BURGER_IGREDIENT,
-            ...item
-        });
+    const addItem = (ingredient) => {
+        dispatch(insertBurgerIngredientsAction({ ...ingredient.item, uuid: uuidv4() }));
     };
 
     const [{ isHover, canDrop }, dropTarget] = useDrop({
