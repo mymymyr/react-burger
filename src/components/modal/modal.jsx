@@ -25,7 +25,7 @@ function Modal({ title = '', onCloseModal, children }) {
         return () => {
             document.removeEventListener('keydown', closeByEscape);
         }
-    }, []);
+    }, [onCloseModal]);
 
     return createPortal(
         (

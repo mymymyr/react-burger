@@ -10,8 +10,9 @@ import OrderDetails from '../order-details/order-details.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { CLOSE_INGREDIENT_MODAL, OPEN_INGREDIENT_MODAL } from '../../services/actions/current-ingredient';
-import { CLOSE_ORDER_MODAL, createOrder } from '../../services/actions/order';
+import { CLOSE_INGREDIENT_MODAL, OPEN_INGREDIENT_MODAL } from '../../services/actions/current-ingredient.js';
+import { CLOSE_ORDER_MODAL, createOrder } from '../../services/actions/order.js';
+import { CLEAR_BURGER_INGREDIENTS } from '../../services/actions/burger-ingredients.js';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,8 +42,14 @@ function App() {
   }
 
   useEffect(() => {
+    if (order !== null) {
+      dispatch({
+        type: CLEAR_BURGER_INGREDIENTS
+      });
+      return;
+    }
     dispatch(getIngredients());
-  }, [dispatch]);
+  }, [dispatch, order]);
 
   return (
     <div className={appStyles.page}>

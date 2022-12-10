@@ -1,5 +1,13 @@
 const BURGER_API_URL = 'https://norma.nomoreparties.space/api';
 
+function checkSuccess(res) {
+    if (res && res.success) {
+      return res;
+    } else {
+      throw new Error(res.message);
+    }
+  }
+
 function checkResponse(res) {
     if (!res.ok) {
         const message = `Произошла ошибка: ${res.status}`;
@@ -10,7 +18,8 @@ function checkResponse(res) {
 
 async function request(url, options) {
     const res = await fetch(url, options);
-    return checkResponse(res);
+    const result = await checkResponse(res);
+    return checkSuccess(result);
 }
 
 function getIngredientsRequest() {

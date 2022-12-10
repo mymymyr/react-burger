@@ -15,18 +15,14 @@ export const currentIngredientReducer = (state = initialState, action) => {
                 ingredient: action.ingredient
             }
         }
-
         case CLOSE_INGREDIENT_MODAL: {
             return {
                 ...state,
                 ingredient: null
             }
         }
-
         default: {
-            return {
-                ...state
-            }
+            return state;
         }
     }
 }

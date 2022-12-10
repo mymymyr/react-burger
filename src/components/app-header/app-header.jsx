@@ -18,9 +18,9 @@ function AppHeader() {
                     </a>
                 </div>
             </div>
-            <div className={headerStyles.position__center}>
+            <a href='/' className={headerStyles.position__center}>
                 <Logo />
-            </div>
+            </a>
             <div className={headerStyles.position__end}>
                 <div className={`${headerStyles.flex} ${headerStyles.element} className='p-5 mt-4 mb-4`}>
                     <ProfileIcon type='secondary' />

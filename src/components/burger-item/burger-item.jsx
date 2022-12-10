@@ -48,7 +48,7 @@ function BurgerItem({ item, index }) {
             index: item.index
         });
     };
-    const [{ opacity }, ref, previewDrag] = useDrag({
+    const [, ref, previewDrag] = useDrag({
         type: 'burgerIngredient',
         item: {
             ...item,

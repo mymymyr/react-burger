@@ -7,15 +7,12 @@ import { useSelector } from 'react-redux';
 
 function Card({ item, openModal }) {
     const { counters } = useSelector(store => store.burgerIngredients);
-
-    const [{ opacity }, ref, preview] = useDrag({
+ 
+    const [, ref, preview] = useDrag({
         type: 'ingredient',
-        item: { item },
-        collect: monitor => ({
-            opacity: monitor.isDragging() ? 0.5 : 1
-        })
+        item: { item }
     });
-    const counterVisible = (counters[item._id] !== undefined) && (counters[item._id] !== 0);
+    const counterVisible = counters && (counters[item._id] !== undefined) && (counters[item._id] !== 0);
     return (
         <li ref={ref} className={cardStyles.element} onClick={() => { openModal(item) }}>
             <DragPreviewImage connect={preview} src={item.image} />
@@ -27,7 +24,7 @@ function Card({ item, openModal }) {
             <p className={`${cardStyles.position__center} text text_type_main-small`}>
                 {item.name}
             </p>
-            { counterVisible &&
+            {counterVisible &&
                 (<Counter count={counters[item._id]} size='default' extraClass='m-1' />)
             }
         </li>

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { INSERT_BURGER_IGREDIENT } from '../../services/actions/burger-ingredients.js';
 import BurgerItem from '../burger-item/burger-item.jsx';
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor({ openModal }) {
     let { ingredients, ingredientsPreview, preview } = useSelector(store => store.burgerIngredients);
@@ -69,7 +70,7 @@ function BurgerConstructor({ openModal }) {
                 )}
                 <ul className={`${burgerConstructorStyles.list} ${burgerConstructorStyles.scroll}`}>
                     {internalIngredients.map((item, index) => (
-                        <BurgerItem key={`${item._id}__${index}`} item={item} index={index} />
+                        <BurgerItem key={uuidv4()} item={item} index={index} />
                     ))}
                 </ul>
                 {bun && (

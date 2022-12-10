@@ -11,16 +11,15 @@ export function createOrder(item) {
             type: GET_ORDER_REQUEST
         });
         createOrderRequest(item).then(res => {
-            if (res && res.success) {
-                dispatch({
-                    type: GET_ORDER_SUCCESS,
-                    order: res.order
-                });
-            } else {
-                dispatch({
-                    type: GET_ORDER_FAILED
-                });
-            }
-        }).catch((err) => { console.log(err); });;
+            dispatch({
+                type: GET_ORDER_SUCCESS,
+                order: res.order
+            });
+        }).catch((err) => {
+            dispatch({
+                type: GET_ORDER_FAILED
+            });
+            console.log(err);
+        });;
     };
 }
