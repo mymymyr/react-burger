@@ -3,7 +3,6 @@ import Card from '../card/card.jsx';
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from '../../utils/dataPropTypes.js';
 import { useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 function BurgerIngredientCategory({ data, name, openModal, sectionRef }) {
     return (
@@ -14,7 +13,7 @@ function BurgerIngredientCategory({ data, name, openModal, sectionRef }) {
             <ul className={burgerIngredientCategoryStyles.list}>
                 {
                     useMemo(() => data.map((item) => (
-                        <Card key={uuidv4()} item={item} openModal={openModal} />
+                        <Card key={item.uuid} item={item} openModal={openModal} />
                     )), [data, openModal])
                 }
             </ul>

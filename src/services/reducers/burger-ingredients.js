@@ -8,6 +8,7 @@ import {
   CLEAR_BURGER_INGREDIENTS
 } from '../actions/burger-ingredients.js';
 import { BURGER_COMPOSITION } from '../../utils/constants.js';
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   ingredients: [],
@@ -37,8 +38,8 @@ export const burgerIngredientsReducer = (state = { ...initialState }, action) =>
       return {
         ...state,
         ingredients: action.item.type !== BURGER_COMPOSITION.bun ?
-          [...state.ingredients, action.item] :
-          [action.item, ...state.ingredients.filter(ingredient => ingredient.type !== BURGER_COMPOSITION.bun)]
+          [...state.ingredients, {...action.item, uuid: uuidv4()}] :
+          [{...action.item, uuid: uuidv4()}, ...state.ingredients.filter(ingredient => ingredient.type !== BURGER_COMPOSITION.bun)]
       }
     }
     case ERASE_BURGER_IGREDIENT: {
