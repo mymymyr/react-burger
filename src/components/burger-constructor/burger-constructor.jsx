@@ -8,7 +8,10 @@ import { INSERT_BURGER_IGREDIENT } from '../../services/actions/burger-ingredien
 import BurgerItem from '../burger-item/burger-item.jsx';
 
 function BurgerConstructor({ openModal }) {
-    const { ingredients } = useSelector(store => store.burgerIngredients);
+    let { ingredients, ingredientsPreview, preview } = useSelector(store => store.burgerIngredients);
+    if (preview) {
+        ingredients = ingredientsPreview;
+    }
     const bun = ingredients.find((item) => item.type === BURGER_COMPOSITION.bun);
     const dispatch = useDispatch();
 

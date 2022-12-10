@@ -3,6 +3,10 @@
     align-items: center;
 }
 
+.opacity {
+    opacity: 50%;
+}
+
 .dragIcon {
     min-width: 32px;
     cursor: pointer;
