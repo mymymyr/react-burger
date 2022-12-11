@@ -1,83 +1,69 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header.jsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
 import Modal from '../modal/modal.jsx';
-import { getIngredients, createOrder } from '../../utils/burger-api.js';
+import { getIngredients } from '../../services/actions/ingredients.js';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import OrderDetails from '../order-details/order-details.jsx';
-import { MODALS } from '../../utils/constants.js';
-import { BurgerContext } from '../../utils/contexts.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import { closeingredientModalAction, openIngredientModalAction } from '../../services/actions/current-ingredient.js';
+import { closeOrderModal, createOrder } from '../../services/actions/order.js';
+import { clearBurgerIngredientsAction } from '../../services/actions/burger-ingredients.js';
 
 function App() {
-  const [state, setState] = useState({
-    data: null,
-    loading: false
-  });
-  const [modalCurrentType, setModalCurrentType] = useState(null);
-  const [item, setItem] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
+  const dispatch = useDispatch();
+  const { ingredients } = useSelector(store => store.ingredients);
+  const { ingredient } = useSelector(store => store.currentIngredient);
+  const { order } = useSelector(store => store.order);
 
-  function handleOpenIngredientModal(item) {
-    setItem(item);
-    setModalCurrentType(MODALS.Ingredient);
+  const handleOpenIngredientModal = (item) => {
+    dispatch(openIngredientModalAction(item));
   }
 
-  function handleOpenOrderModal(item) {
-    createOrder(item).then(
-      (orderData) => {
-        if (!orderData.success) { return; }
-        setOrderNumber(orderData.order.number);
-        setModalCurrentType(MODALS.Order);
-      }
-    ).catch((err) => {
-      console.log(err);
-    })
+  const handleOpenOrderModal = (item) => {
+    dispatch(createOrder(item));
   }
 
-  function handleCloseModal() {
-    setModalCurrentType(null);
+  const handleCloseModal = () => {
+    dispatch(closeingredientModalAction());
+    dispatch(closeOrderModal());
   }
 
   useEffect(() => {
-
-    setState({ ...state, loading: true });
-
-    getIngredients().then(
-      (data) => {
-        setState({ ...state, data: data.data, loading: false });
-      }
-    ).catch((err) => {
-      console.log(err);
-      setState({ ...state, loading: false });
-    })
-
-  }, []);
+    if (order !== null) {
+      dispatch(clearBurgerIngredientsAction());
+      return;
+    }
+    dispatch(getIngredients());
+  }, [dispatch, order]);
 
   return (
     <div className={appStyles.page}>
       <AppHeader />
-      {state.data && (
+      {ingredients.length !== 0 && (
         <>
           <main className={appStyles.main}>
-            <BurgerContext.Provider value={state}>
+            <DndProvider backend={HTML5Backend}>
               <BurgerIngredients openModal={handleOpenIngredientModal} />
               <BurgerConstructor openModal={handleOpenOrderModal} />
-            </BurgerContext.Provider>
+            </DndProvider>
           </main>
           <div className={appStyles.overflow}>
             {
-              modalCurrentType === MODALS.Ingredient && (
+              ingredient !== null && (
                 <Modal onCloseModal={handleCloseModal} title='Детали ингредиента'>
-                  <IngredientDetails item={item} />
+                  <IngredientDetails />
                 </Modal>
               )
             }
             {
-              modalCurrentType === MODALS.Order && (
+              order !== null && (
                 <Modal onCloseModal={handleCloseModal}>
-                  <OrderDetails orderNumber={orderNumber} />
+                  <OrderDetails />
                 </Modal>
               )
             }

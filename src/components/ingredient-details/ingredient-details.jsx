@@ -1,35 +1,32 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
-import { dataItemPropTypes } from '../../utils/dataPropTypes.js';
+import { useSelector } from 'react-redux';
 
-function IngredientDetails({ item }) {
+function IngredientDetails() {
+    const { ingredient } = useSelector(store => store.currentIngredient);
     return (
         <>
-            <img className={ingredientDetailsStyles.maxWidth} src={item.image_large} alt={item.name} />
-            <p className={`${ingredientDetailsStyles.maxWidth} text text_type_main-medium pt-4 pb-8`}>{item.name}</p>
+            <img className={ingredientDetailsStyles.maxWidth} src={ingredient.image_large} alt={ingredient.name} />
+            <p className={`${ingredientDetailsStyles.maxWidth} text text_type_main-medium pt-4 pb-8`}>{ingredient.name}</p>
             <ul className={ingredientDetailsStyles.list}>
                 <li className={ingredientDetailsStyles.listItem}>
                     <p className="text text_type_main-default text_color_inactive">Калории,ккал</p>
-                    <p className="text text_type_digits-default text_color_inactive">{item.calories}</p>
+                    <p className="text text_type_digits-default text_color_inactive">{ingredient.calories}</p>
                 </li>
                 <li className={ingredientDetailsStyles.listItem}>
                     <p className="text text_type_main-default text_color_inactive">Белки, г</p>
-                    <p className="text text_type_digits-default text_color_inactive">{item.proteins}</p>
+                    <p className="text text_type_digits-default text_color_inactive">{ingredient.proteins}</p>
                 </li>
                 <li className={ingredientDetailsStyles.listItem}>
                     <p className="text text_type_main-default text_color_inactive">Жиры, г</p>
-                    <p className="text text_type_digits-default text_color_inactive">{item.fat}</p>
+                    <p className="text text_type_digits-default text_color_inactive">{ingredient.fat}</p>
                 </li>
                 <li className={ingredientDetailsStyles.listItem}>
                     <p className="text text_type_main-default text_color_inactive">Углеводы, г</p>
-                    <p className="text text_type_digits-default text_color_inactive">{item.carbohydrates}</p>
+                    <p className="text text_type_digits-default text_color_inactive">{ingredient.carbohydrates}</p>
                 </li>
             </ul>
         </>
     );
-}
-
-IngredientDetails.propTypes = {
-    item: dataItemPropTypes.isRequired
 }
 
 export default IngredientDetails;
