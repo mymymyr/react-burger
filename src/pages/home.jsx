@@ -52,8 +52,10 @@ function HomePage() {
             dispatch(clearBurgerIngredientsAction());
             return;
         }
-        dispatch(getIngredients());
-    }, [dispatch, order]);
+        if (ingredients.length === 0) {
+            dispatch(getIngredients());
+        }
+    }, [dispatch, order, ingredients]);
 
     return (
         <div className={homeStyles.page}>
