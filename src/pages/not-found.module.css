@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    text-align: center;
+    height: calc(100vh - 120px);
+}
+
+.content {
+    margin: auto;
+}
+
+.link {
+    color: #4C4CFF;
+    text-decoration: none;
+}

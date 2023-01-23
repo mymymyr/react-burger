@@ -1,32 +1,44 @@
 import headerStyles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, useLocation } from 'react-router-dom';
+import { BASE_PATH, ORDER_FEED_PATH, PROFILE_PATH } from '../../utils/constants';
 
 function AppHeader() {
+    const location = useLocation();
+
+    const getBurgerIconType = (pathname) => {
+        return location.pathname === pathname ? 'primary' : 'secondary';
+    };
+
+    const getExtraActiveStyle = (pathname) => {
+        return location.pathname === pathname ? '' : 'text_color_inactive';
+    };
+
     return (
         <header className={headerStyles.header}>
             <div className={headerStyles.flex}>
                 <div className={`${headerStyles.flex} ${headerStyles.element} p-5 mt-4 mb-4 mr-2`}>
-                    <BurgerIcon type='primary' />
-                    <a href='/' className={`${headerStyles.link} text text_type_main-default pl-2`}>
+                    <BurgerIcon type={getBurgerIconType(BASE_PATH)} />
+                    <Link to={BASE_PATH} className={`${headerStyles.link} text text_type_main-default pl-2 ${getExtraActiveStyle(BASE_PATH)}`}>
                         Конструктор
-                    </a>
+                    </Link>
                 </div>
                 <div className={`${headerStyles.flex} ${headerStyles.element} p-5 mt-4 mb-4`}>
-                    <ListIcon type='secondary' />
-                    <a href='/' className={`${headerStyles.link} text text_type_main-default text_color_inactive pl-2`}>
+                    <ListIcon type={getBurgerIconType(ORDER_FEED_PATH)} />
+                    <Link to={ORDER_FEED_PATH} className={`${headerStyles.link} text text_type_main-default pl-2 ${getExtraActiveStyle(ORDER_FEED_PATH)}`}>
                         Лента заказов
-                    </a>
+                    </Link>
                 </div>
             </div>
-            <a href='/' className={headerStyles.position__center}>
+            <Link to={BASE_PATH} className={headerStyles.position__center}>
                 <Logo />
-            </a>
+            </Link>
             <div className={headerStyles.position__end}>
-                <div className={`${headerStyles.flex} ${headerStyles.element} className='p-5 mt-4 mb-4`}>
-                    <ProfileIcon type='secondary' />
-                    <a href='/' className={`${headerStyles.link} text text_type_main-default text_color_inactive pl-2`}>
+                <div className={`${headerStyles.flex} ${headerStyles.element} p-5 mt-4 mb-4`}>
+                    <ProfileIcon type={getBurgerIconType(PROFILE_PATH)} />
+                    <Link to={PROFILE_PATH} className={`${headerStyles.link} text text_type_main-default pl-2 pr-5 ${getExtraActiveStyle(PROFILE_PATH)}`}>
                         Личный кабинет
-                    </a>
+                    </Link>
                 </div>
             </div>
         </header>

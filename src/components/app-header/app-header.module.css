@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
-    color: 'white';
+    color: #F2F2F3;
 }
 
 .element {
@@ -25,5 +25,5 @@
 
 .link {
     text-decoration: none;
-    color: inherit
+    color: inherit;
 }

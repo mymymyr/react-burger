@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 function BurgerIngredients({ openModal }) {
     const { ingredients } = useSelector(store => store.ingredients);
-
     const bunArr = useMemo(() => ingredients.filter((item) => item.type === BURGER_COMPOSITION.bun), [ingredients]);
     const mainArr = useMemo(() => ingredients.filter((item) => item.type === BURGER_COMPOSITION.main), [ingredients]);
     const sauceArr = useMemo(() => ingredients.filter((item) => item.type === BURGER_COMPOSITION.sauce), [ingredients]);
@@ -24,6 +23,7 @@ function BurgerIngredients({ openModal }) {
         }
         setCurrent(value);
     }
+
     const setActiveTab = () => {
         const tabs = [bunRef, sauceRef];
         const types = [BURGER_COMPOSITION.bun, BURGER_COMPOSITION.sauce];

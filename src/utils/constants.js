@@ -6,4 +6,13 @@ const BURGER_COMPOSITION = {
     main: 'main'
 }
 
-export { MODAL_ROOT, BURGER_COMPOSITION }
+const ACCESS_TOKEN = 'accessToken';
+const REFRESH_TOKEN = 'refreshToken';
+const BEARER = 'Bearer ';
+
+const BASE_PATH = '/';
+const ORDER_FEED_PATH = '/feed';
+const ORDER_HISTORY_PATH = '/profile/orders';
+const PROFILE_PATH = '/profile';
+
+export { MODAL_ROOT, BURGER_COMPOSITION, ACCESS_TOKEN, REFRESH_TOKEN, BEARER, BASE_PATH, ORDER_FEED_PATH, ORDER_HISTORY_PATH, PROFILE_PATH };

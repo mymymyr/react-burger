@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 function Card({ item, openModal }) {
     const { counters } = useSelector(store => store.burgerIngredients);
- 
+
     const [, ref, preview] = useDrag({
         type: 'ingredient',
         item: { item }
