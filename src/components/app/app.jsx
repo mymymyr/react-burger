@@ -16,7 +16,7 @@ function App() {
   return (
     <div className={appStyles.page}>
       <ProvideAuth>
-        <Router>
+        <Router basename={'/react-burger'}>
           <AppHeader />
           <Routes>
             <Route path="/" element={<HomePage />} />
