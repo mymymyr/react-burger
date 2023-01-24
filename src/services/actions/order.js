@@ -1,4 +1,5 @@
 import { createOrderRequest } from "../../utils/burger-api.js";
+import { BEARER } from "../../utils/constants.js";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -18,15 +19,15 @@ const getOrderFailedAction = () => ({
     type: GET_ORDER_FAILED
 });
 
-export const createOrder = (item) => {
+export const createOrder = (item, accessToken) => {
     return (dispatch) => {
         dispatch(getOrdersRequestAction());
-        createOrderRequest(item).then(res => {
+        createOrderRequest(item, BEARER + accessToken).then(res => {
             dispatch(getOrderSuccessAction(res));
         }).catch((err) => {
             dispatch(getOrderFailedAction());
             console.log(err);
-        });;
+        });
     };
 }
 

@@ -2,9 +2,11 @@ import ingredientDetailsStyles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
 
 function IngredientDetails() {
+
     const { ingredient } = useSelector(store => store.currentIngredient);
+
     return (
-        <>
+        <div className={ingredientDetailsStyles.center}>
             <img className={ingredientDetailsStyles.maxWidth} src={ingredient.image_large} alt={ingredient.name} />
             <p className={`${ingredientDetailsStyles.maxWidth} text text_type_main-medium pt-4 pb-8`}>{ingredient.name}</p>
             <ul className={ingredientDetailsStyles.list}>
@@ -25,7 +27,7 @@ function IngredientDetails() {
                     <p className="text text_type_digits-default text_color_inactive">{ingredient.carbohydrates}</p>
                 </li>
             </ul>
-        </>
+        </div>
     );
 }
 

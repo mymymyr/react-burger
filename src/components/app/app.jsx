@@ -1,75 +1,35 @@
-import { useEffect } from 'react';
 import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header.jsx';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
-import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
-import Modal from '../modal/modal.jsx';
-import { getIngredients } from '../../services/actions/ingredients.js';
-import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
-import OrderDetails from '../order-details/order-details.jsx';
-import { useSelector, useDispatch } from 'react-redux';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
-import { closeingredientModalAction, openIngredientModalAction } from '../../services/actions/current-ingredient.js';
-import { closeOrderModal, createOrder } from '../../services/actions/order.js';
-import { clearBurgerIngredientsAction } from '../../services/actions/burger-ingredients.js';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NotFound404 from '../../pages/not-found.jsx';
+import LoginPage from '../../pages/login.jsx';
+import RegisterPage from '../../pages/register.jsx';
+import ForgotPasswordPage from '../../pages/forgot-password.jsx';
+import ResetPasswordPage from '../../pages/reset-password.jsx';
+import ProfilePage from '../../pages/profile.jsx';
+import ProtectedRoute from '../protected-route/protected-route';
+import { ProvideAuth } from '../provide-auth/provide-auth';
+import HomePage from '../../pages/home';
+import IngredientPage from '../../pages/ingredient';
 
 function App() {
-  const dispatch = useDispatch();
-  const { ingredients } = useSelector(store => store.ingredients);
-  const { ingredient } = useSelector(store => store.currentIngredient);
-  const { order } = useSelector(store => store.order);
-
-  const handleOpenIngredientModal = (item) => {
-    dispatch(openIngredientModalAction(item));
-  }
-
-  const handleOpenOrderModal = (item) => {
-    dispatch(createOrder(item));
-  }
-
-  const handleCloseModal = () => {
-    dispatch(closeingredientModalAction());
-    dispatch(closeOrderModal());
-  }
-
-  useEffect(() => {
-    if (order !== null) {
-      dispatch(clearBurgerIngredientsAction());
-      return;
-    }
-    dispatch(getIngredients());
-  }, [dispatch, order]);
-
   return (
     <div className={appStyles.page}>
-      <AppHeader />
-      {ingredients.length !== 0 && (
-        <>
-          <main className={appStyles.main}>
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients openModal={handleOpenIngredientModal} />
-              <BurgerConstructor openModal={handleOpenOrderModal} />
-            </DndProvider>
-          </main>
-          <div className={appStyles.overflow}>
-            {
-              ingredient !== null && (
-                <Modal onCloseModal={handleCloseModal} title='Детали ингредиента'>
-                  <IngredientDetails />
-                </Modal>
-              )
-            }
-            {
-              order !== null && (
-                <Modal onCloseModal={handleCloseModal}>
-                  <OrderDetails />
-                </Modal>
-              )
-            }
-          </div>
-        </>
-      )}
+      <ProvideAuth>
+        <Router>
+          <AppHeader />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
+            <Route path="/ingredients/:id" element={<IngredientPage />} />
+            <Route path="*" element={<NotFound404 />} />
+          </Routes>
+        </Router>
+      </ProvideAuth>
     </div>
   );
 }

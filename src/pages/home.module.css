@@ -1,0 +1,15 @@
+.page {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 40px;
+    margin-left: 20px;
+}
+
+.overflow {
+    overflow: hidden;
+}

@@ -47,7 +47,7 @@ function BurgerConstructor({ openModal }) {
     };
 
     return (
-        <section className={`${burgerConstructorStyles.section} mt-25 mr-4`}>
+        <section className={`${burgerConstructorStyles.section} mt-25 mr-5`}>
             <ul ref={dropTarget} className={`${burgerConstructorStyles.list} ${isHover ? canDrop ? burgerConstructorStyles.border_green : burgerConstructorStyles.border_red : burgerConstructorStyles.border} `} >
                 {ingredients.length === 0 && (
                     <li className={`${burgerConstructorStyles.legend} 'text text_type_main-medium mb-6' ml-4 mr-4`}>
