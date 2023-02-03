@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import { setCurrentIngredient } from "../services/actions/current-ingredient";
+import { setCurrentIngredientAction } from "../services/actions/current-ingredient";
 import { getIngredients } from "../services/actions/ingredients";
 import HomePage from "./home";
 import ingredientDetailsStyles from '../components/ingredient-details/ingredient-details.module.css';
@@ -17,7 +17,7 @@ function IngredientPage() {
         if (!ingredientsRequest && ingredients.length === 0 && !ingredient) {
             dispatch(getIngredients());
         } else if (!ingredient && ingredients.length !== 0) {
-            dispatch(setCurrentIngredient(ingredients.find((el) => el._id === params.id)));
+            dispatch(setCurrentIngredientAction(ingredients.find((el) => el._id === params.id)));
         }
     }, [dispatch, ingredient, ingredients, ingredientsRequest, params.id]);
 

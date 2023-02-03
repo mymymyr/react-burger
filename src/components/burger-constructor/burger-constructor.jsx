@@ -84,9 +84,9 @@ function BurgerConstructor({ openModal }) {
             </ul>
 
             <div className={`${burgerConstructorStyles.container} mt-10`}>
-                <p className='text text_type_digits-medium'>{
-                    sum
-                }</p>
+                <p className='text text_type_digits-medium'>
+                    {sum}
+                </p>
                 <div className={`${burgerConstructorStyles.currencyIcon} mr-10`}>
                     <CurrencyIcon type='primary' />
                 </div>

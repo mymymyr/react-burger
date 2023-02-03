@@ -11,8 +11,36 @@ import ProtectedRoute from '../protected-route/protected-route';
 import { ProvideAuth } from '../provide-auth/provide-auth';
 import HomePage from '../../pages/home';
 import IngredientPage from '../../pages/ingredient';
+import FeedPage from '../../pages/feed';
+import OrderPage from '../../pages/order';
+import ProfileOrderPage from '../../pages/profile-order';
+import { useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { wsSendMessage, wsSendMessageWithToken, wsStartHeartbeat, wsStartHeartbeatWithToken } from '../../redux/actions/wsActions';
 
 function App() {
+  const dispatch = useDispatch();
+  const { wsConnected, wsConnectedWithToken, startHeartbeat, startHeartbeatWithToken } = useSelector(
+    (store) => store.orders
+  );
+  
+  const pingWebsockets = useCallback((action) => {
+    dispatch(action);
+    setTimeout(pingWebsockets, 5000, action);
+  }, [dispatch]);
+
+  useEffect(()=> {
+    if (!startHeartbeat && wsConnected) {
+      dispatch(wsStartHeartbeat());
+      setTimeout(pingWebsockets, 5000, wsSendMessage({message: "ping"}));
+    }
+    if (!startHeartbeatWithToken && wsConnectedWithToken) {
+      dispatch(wsStartHeartbeatWithToken());
+      setTimeout(pingWebsockets, 5000, wsSendMessageWithToken({message: "ping"}));
+    }
+    
+  }, [dispatch, pingWebsockets, startHeartbeat, startHeartbeatWithToken, wsConnectedWithToken, wsConnected]);
+
   return (
     <div className={appStyles.page}>
       <ProvideAuth>
@@ -25,7 +53,11 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
+            <Route path="/profile/orders" element={<ProtectedRoute element={<ProfileOrderPage />} />} />
+            <Route path="/profile/orders/:id" element={<ProtectedRoute element={<OrderPage />} />} />
+            <Route path="/feed/:id" element={<OrderPage />} />
             <Route path="/ingredients/:id" element={<IngredientPage />} />
+            <Route path="/feed" element={<FeedPage />} />
             <Route path="*" element={<NotFound404 />} />
           </Routes>
         </Router>

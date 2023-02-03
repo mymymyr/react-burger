@@ -2,7 +2,6 @@ import ingredientDetailsStyles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
 
 function IngredientDetails() {
-
     const { ingredient } = useSelector(store => store.currentIngredient);
 
     return (

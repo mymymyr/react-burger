@@ -1,0 +1,89 @@
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.element {
+    padding: 24px;
+    background: #1C1C21;
+    border-radius: 40px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.currencyIcon svg {
+    display: flex;
+    height: 33px;
+    width: 33px;
+    margin-left: 9px;
+}
+
+.image {
+    position: relative;
+    height: 62px;
+    width: 62px;
+    background: #131316;
+    object-fit: cover;
+    border-radius: 100px;
+    z-index: 2;
+}
+
+.images {
+    display: flex;
+}
+
+.imageWrap {
+    position: relative;
+    margin: 2px;
+    z-index: 1;
+}
+
+.imageWrap::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    bottom: 2px;
+    left: -2px;
+    right: -2px;
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    border-radius: 100px;
+}
+
+.imageWrap:not(:first-child) {
+    margin-left: -16px;
+}
+
+.lastImg {
+    position: absolute;
+    top: calc(50% - 4px);
+    left: 50%;
+    margin: 0;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.cover {
+    content: "";
+    position: absolute;
+    opacity: 0.6;
+    background-color: #1C1C21;
+    width: 62px;
+    height: 62px;
+    top: 0;
+    left: 0;
+    border-radius: 100px;
+    z-index: 99;
+}
+
+.red {
+    color: red;
+}
+
+.colorDone {
+    color: #00CCCC;
+}
