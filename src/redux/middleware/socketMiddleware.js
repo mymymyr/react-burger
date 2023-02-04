@@ -9,7 +9,7 @@ export const socketMiddleware = (wsUrl, wsActions, withToken) => {
     return next => action => {
       const { dispatch } = store;
       const { type, payload } = action;
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+      const { wsInit, wsSendMessage, wsClose, onOpen, onClose, onError, onMessage } = wsActions;
       const token = getCookie(ACCESS_TOKEN);
       if (type === wsInit) {
         if (withToken && token) {
@@ -41,6 +41,8 @@ export const socketMiddleware = (wsUrl, wsActions, withToken) => {
         if (type === wsSendMessage) {
           const message = { ...payload };
           socket.send(JSON.stringify(message));
+        } else if (type === wsClose) {
+          socket.close(1000);
         }
       }
       next(action);

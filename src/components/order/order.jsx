@@ -6,22 +6,40 @@ import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 function Order({ order, openModal, displayStatus }) {
     const orderIngredients = order.ingredients;
+    const orderNumber = order ? order.number : undefined;
+    const [ingredients, setIngredients] = useState([]);
     const { ingredients: storeIngredients } = useSelector(store => store.ingredients);
     const isCorrectData = useMemo(() => orderIngredients.every((el) => storeIngredients.some((x) => el === x._id)), [orderIngredients, storeIngredients]);
-    let ingredients = useMemo(() => [], []);
-    storeIngredients.length > 0 && orderIngredients.forEach(id => {
-        ingredients.push({ ...storeIngredients.find(el => el._id === id) });
-    });
+    const prepareIngredients = useMemo(() => {
+        if (storeIngredients.length > 0) {
+            return orderIngredients.reduce((total, id) => {
+                const ing = storeIngredients.find(el => el._id === id);
+                if (ing.type === BURGER_COMPOSITION.bun && ((total.length > 0 && total[0].type !== BURGER_COMPOSITION.bun) || total.length === 0)) {
+                    total.unshift({ ...ing });
+                } else if (ing.type !== BURGER_COMPOSITION.bun) {
+                    total.push({ ...ing });
+                }
+                return total;
+            }, []);
+        }
+        return [];
+    }, [orderIngredients, storeIngredients]);
     const bun = useMemo(() => ingredients.find((item) => item.type === BURGER_COMPOSITION.bun), [ingredients]);
     const internalIngredients = useMemo(() => ingredients.filter((item) => item.type !== BURGER_COMPOSITION.bun), [ingredients]);
-    bun ? ingredients = [bun, ...internalIngredients] : ingredients = [...internalIngredients];
-    const sum = (bun ? bun.price * 2 : 0) +
-        internalIngredients.reduce((prev, cur) => prev + cur.price, 0);
-    const orderNumber = order ? order.number : undefined;
+    const sum = useMemo(() => (bun ? bun.price * 2 : 0) +
+        internalIngredients.reduce((prev, cur) => prev + cur.price, 0), [internalIngredients, bun]);
+
+    useEffect(() => {
+        if (ingredients.length === 0) {
+            setIngredients(prepareIngredients);
+        }
+    }, [ingredients.length, prepareIngredients]);
 
     return (
         <li className={orderStyles.element} onClick={() => { openModal(order._id) }}>

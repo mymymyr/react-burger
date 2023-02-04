@@ -8,6 +8,10 @@ import {
   WS_WITH_TOKEN_SEND_MESSAGE,
   WS_START_HEARTBEAT,
   WS_WITH_TOKEN_START_HEARTBEAT,
+  WS_CONNECTION_CLOSE,
+  WS_WITH_TOKEN_CONNECTION_CLOSE,
+  WS_STOP_HEARTBEAT,
+  WS_WITH_TOKEN_STOP_HEARTBEAT,
 } from '../action-types';
 
 export const wsConnectionSuccess = () => {
@@ -27,6 +31,19 @@ export const wsConnectionClosed = () => {
     type: WS_CONNECTION_CLOSED
   };
 };
+
+export const wsClose = () => {
+  return {
+    type: WS_CONNECTION_CLOSE
+  };
+};
+
+export const wsCloseWithToken = () => {
+  return {
+    type: WS_WITH_TOKEN_CONNECTION_CLOSE
+  };
+};
+
 
 export const wsGetMessage = message => {
   return {
@@ -65,5 +82,17 @@ export const wsStartHeartbeat = () => {
 export const wsStartHeartbeatWithToken = () => {
   return {
     type: WS_WITH_TOKEN_START_HEARTBEAT
+  };
+};
+
+export const wsStopHeartbeat = () => {
+  return {
+    type: WS_STOP_HEARTBEAT
+  };
+};
+
+export const wsStopHeartbeatWithToken = () => {
+  return {
+    type: WS_WITH_TOKEN_STOP_HEARTBEAT
   };
 };

@@ -8,12 +8,14 @@ import { rootReducer } from './services/reducers';
 import thunk from 'redux-thunk';
 import { socketMiddleware } from './redux/middleware/socketMiddleware';
 import {
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
+  WS_WITH_TOKEN_CONNECTION_CLOSE,
   WS_WITH_TOKEN_CONNECTION_CLOSED,
   WS_WITH_TOKEN_CONNECTION_ERROR,
   WS_WITH_TOKEN_CONNECTION_START,
@@ -34,6 +36,7 @@ const wsUrlWithToken = 'wss://norma.nomoreparties.space/orders';
 
 const wsActions = {
   wsInit: WS_CONNECTION_START,
+  wsClose: WS_CONNECTION_CLOSE,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,
@@ -43,6 +46,7 @@ const wsActions = {
 
 const wsActionsWithToken = {
   wsInit: WS_WITH_TOKEN_CONNECTION_START,
+  wsClose: WS_WITH_TOKEN_CONNECTION_CLOSE,
   wsSendMessage: WS_WITH_TOKEN_SEND_MESSAGE,
   onOpen: WS_WITH_TOKEN_CONNECTION_SUCCESS,
   onClose: WS_WITH_TOKEN_CONNECTION_CLOSED,

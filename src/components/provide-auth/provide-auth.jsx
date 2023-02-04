@@ -9,12 +9,15 @@ import { getAccessToken } from "../../utils/token";
 import { getCookie, deleteCookie } from "../../utils/cookie";
 import { ACCESS_TOKEN } from "../../utils/constants";
 import { profileRequestClearStateAction } from "../../services/actions/profile";
+import { useLocation } from "react-router-dom";
+import { wsClose, wsCloseWithToken } from "../../redux/actions/wsActions";
 
 export function ProvideAuth({ children }) {
     const dispatch = useDispatch();
+    const pathnameParts = useLocation().pathname.split('/');
     const auth = useSelector((store) => store.user.isAuthenticated);
     const { profileRequest, profileRequestFailed } = useSelector((store) => store.profile);
-    const { wsConnected, wsConnectedWithToken, wsStartConnecting } = useSelector(
+    const { wsConnected, wsConnectedWithToken, wsStartConnecting, wsWithTokenStartConnecting } = useSelector(
         (store) => store.orders
     );
 
@@ -27,24 +30,24 @@ export function ProvideAuth({ children }) {
                 dispatch(signInUserActionFail());
             }
         };
-
-        if (auth) {
-            if (!wsConnectedWithToken) {
-                dispatch({ type: WS_WITH_TOKEN_CONNECTION_START });
-            }
-        } else if (auth === undefined) {
+        if (auth === undefined && !profileRequest) {
             authStrategy();
         } else if (getCookie(ACCESS_TOKEN) && !profileRequest && profileRequestFailed === true) {
             deleteCookie(ACCESS_TOKEN);
             dispatch(profileRequestClearStateAction());
             dispatch(userClearSignState());
         }
-
-        if (auth !== undefined && !wsConnected && !wsStartConnecting) {
+        if (pathnameParts.includes('feed') && !wsConnected && !wsStartConnecting) {
             dispatch({ type: WS_CONNECTION_START });
+        } else if (!pathnameParts.includes('feed') && wsConnected) {
+            dispatch(wsClose());
         }
-
-    }, [auth, dispatch, wsConnected, wsConnectedWithToken]);
+        if (auth && pathnameParts.includes('orders') && !wsConnectedWithToken && !wsWithTokenStartConnecting) {
+            dispatch({ type: WS_WITH_TOKEN_CONNECTION_START });
+        } else if (!pathnameParts.includes('orders') && wsConnectedWithToken) {
+            dispatch(wsCloseWithToken());
+        }
+    }, [auth, dispatch, pathnameParts, wsConnected, wsConnectedWithToken, profileRequest, profileRequestFailed, wsStartConnecting, wsWithTokenStartConnecting]);
 
     return auth !== undefined && children;
 }
