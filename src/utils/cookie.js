@@ -1,5 +1,6 @@
 function setCookie(name, value, props) {
     props = props || {};
+    props["path"] = '/react-burger';
     let exp = props.expires;
     if (typeof exp == "number" && exp) {
         const d = new Date();

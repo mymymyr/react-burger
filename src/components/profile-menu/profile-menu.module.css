@@ -1,0 +1,21 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    max-width: 320px;
+    margin-top: 120px;
+    margin-left: 20px;
+    min-width: 320px;
+}
+
+.link {
+    min-height: 64px;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #F2F2F3;
+}
+
+.active {
+    color: #F2F2F3;
+}

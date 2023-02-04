@@ -7,7 +7,7 @@ export const openIngredientModalAction = (item) => ({
     ingredient: { ...item }
 });
 
-export const setCurrentIngredient = (item) => ({
+export const setCurrentIngredientAction = (item) => ({
     type: SET_CURRENT_INGREDIENT,
     ingredient: { ...item }
 

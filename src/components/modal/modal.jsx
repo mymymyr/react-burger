@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { MODAL_ROOT } from '../../utils/constants.js';
 
-
-function Modal({ title = '', onCloseModal, children }) {
+function Modal({ title = '', isDigit, onCloseModal, children }) {
     const modalOverlayRef = useRef(null)
     const closeModal = (e) => {
         e.target.classList.contains(modalOverlayRef.current.className) &&
@@ -34,7 +33,7 @@ function Modal({ title = '', onCloseModal, children }) {
                 <div className={modalStyles.modal}>
                     <div className={modalStyles.container}>
                         <div className={`${modalStyles.header} pl-10 pt-10 pr-10`} >
-                            <p className='text text_type_main-large pr-9'>
+                            <p className={`${isDigit ? 'text text_type_digits-default' : 'text text_type_main-large pr-9'}`}>
                                 {title}
                             </p>
                             <p className={modalStyles.cursor}>
@@ -51,8 +50,9 @@ function Modal({ title = '', onCloseModal, children }) {
 }
 
 Modal.propTypes = {
-    onCloseModal: PropTypes.func.isRequired,
-    title: PropTypes.string
+    title: PropTypes.string,
+    isDigit: PropTypes.bool,
+    onCloseModal: PropTypes.func.isRequired
 };
 
 export default Modal;

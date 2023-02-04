@@ -6,3 +6,5 @@
 * React
 * JSX
 * CSS
+* Redux
+* WebSocket

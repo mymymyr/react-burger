@@ -20,7 +20,7 @@ function HomePage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const { ingredients } = useSelector(store => store.ingredients);
+    const { ingredients, ingredientsRequest } = useSelector(store => store.ingredients);
     const { ingredient, modal } = useSelector(store => store.currentIngredient);
     const { order } = useSelector(store => store.order);
     const userIsAuth = useSelector(store => store.user.isAuthenticated);
@@ -52,10 +52,10 @@ function HomePage() {
             dispatch(clearBurgerIngredientsAction());
             return;
         }
-        if (ingredients.length === 0) {
+        if (!ingredientsRequest && ingredients.length === 0) {
             dispatch(getIngredients());
         }
-    }, [dispatch, order, ingredients]);
+    }, [dispatch, order, ingredients, ingredientsRequest]);
 
     return (
         <div className={homeStyles.page}>

@@ -16,5 +16,4 @@ const dataItemPropTypes = PropTypes.shape({
     carbohydrates: PropTypes.number.isRequired
 });
 
-
 export { burgerPropTypes, dataItemPropTypes };
