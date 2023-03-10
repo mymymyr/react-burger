@@ -1,0 +1,6 @@
+export const USER_SIGN_IN_SUCCESS =
+    'USER_SIGN_IN_SUCCESS';
+export const USER_SIGN_IN_FAIL = 'USER_SIGN_IN_FAIL';
+export const USER_SIGN_OUT = 'USER_SIGN_OUT';
+export const USER_CLEAR_SIGN_STATE =
+    'USER_CLEAR_SIGN_STATE';
